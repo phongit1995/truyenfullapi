@@ -10,7 +10,7 @@ let manga = new Schema({
     image:String,
     views:{
         type:Number,
-        default:0
+        default:1
     },
     description:String,
     url:String,
@@ -25,6 +25,10 @@ let manga = new Schema({
     chapter_update:{
         type:Date,
         default:Date.now
+    },
+    last_chapter:{
+        type:mongoose.Types.ObjectId,
+        ref:'chapter'
     },
     enable:{
         type:Boolean,

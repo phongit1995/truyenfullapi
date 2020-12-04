@@ -16,6 +16,9 @@ let chapter = new Schema({
     url:{
         type:String
     },
+    content:{
+        type:String
+    },
     images:[
         {
             type:String
