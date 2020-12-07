@@ -60,6 +60,6 @@ queue.process("getChapterComic",1, function(job,done){
         done()
     })
 })
-// kue.app.listen(5000);
+kue.app.listen(5000);
 // getDetialComic("https://truyenfull.vn/tra-sua-vi-em/","5fc9b9221a730b2db415f35b");
 //getContentComic("https://truyenfull.vn/tui-nho-ben-nguc-trai/chuong-5/");

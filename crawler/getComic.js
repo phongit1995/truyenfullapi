@@ -74,7 +74,7 @@ const getDetialComic = async (url,manga_id)=>{
     const ListPromise = Chapter.map((chapter,index)=>createNewChapter(manga_id,chapter.url,index+1,chapter.name))
     const ListChapterDB =  await Promise.all(ListPromise);
     const listId = ListChapterDB.map(item=>item._id);
-    await UpdateMangaInfo(manga_id,author,category,image,description,status,listId,listId[listId.length-1]);
+    await UpdateMangaInfo(manga_id,title,author,category,image,description,status,listId,listId[listId.length-1]);
     return {
         Chapter:Chapter.length,
         lengthPage:lengthPage
@@ -129,10 +129,11 @@ const createNewChapter=(manga_id,url,index,title)=>{
         url:url
     })
 }
-const UpdateMangaInfo=(manga_id,author,category,image,description,manga_status,chapters,last_chapter)=>{
+const UpdateMangaInfo=(manga_id,name,author,category,image,description,manga_status,chapters,last_chapter)=>{
     return mangaDB.findByIdAndUpdate(manga_id,
         {
             author:author,
+            name:name,
             category:category,
             image:image,
             description:description,
