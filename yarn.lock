@@ -620,7 +620,7 @@
     tslib "2.0.3"
     uuid "8.3.1"
 
-"@nestjs/jwt@^7.1.0":
+"@nestjs/jwt@^7.2.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@nestjs/jwt/-/jwt-7.2.0.tgz#d55d15c861b3e0d67a852cbe6131b14c85246852"
   integrity sha512-uOTqYmWNpu+oS/MrdYjrWXtKGV4HkCYmAEVEFPP/KfiP/7K6fNy+boLllE6cnqESAXh9u0CLa1noAAavs+LHEQ==

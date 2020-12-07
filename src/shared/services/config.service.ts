@@ -5,6 +5,7 @@ export class ConfigServer {
     private readonly validationScheme = {
         PORT: Joi.number().default(3000),
         MONGO_URL:Joi.string(),
+        JWT_SECRET:Joi.string().required(),
         SERVER_PUSH_KEY:Joi.string().required(),
     }
     constructor(){

@@ -40,5 +40,6 @@ export interface User extends mongoose.Document {
    role?:string,
    gender?:number,
    vip?:boolean,
-   vip_time?:Date
+   vip_time?:Date,
+   token?:string
 }
