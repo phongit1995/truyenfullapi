@@ -17,3 +17,7 @@ export class dtoLoginUser{
     @IsString()
     password:string;
 }
+export class dtoDevicesUser{
+    @ApiProperty({example:"adwndnanwudnmamakdnwiundwk"})
+    devices:string;
+}

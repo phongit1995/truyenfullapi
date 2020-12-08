@@ -29,7 +29,10 @@ export const userSchema:mongoose.Schema = new mongoose.Schema({
     vip_time:{
         type:Date,
         default:Date.now
-    }
+    },
+    devices:[
+        {type:String}
+    ]
 },{timestamps:true})
 export interface User extends mongoose.Document {
    name?:string,
@@ -41,5 +44,6 @@ export interface User extends mongoose.Document {
    gender?:number,
    vip?:boolean,
    vip_time?:Date,
+   devices?:Array<string>,
    token?:string
 }

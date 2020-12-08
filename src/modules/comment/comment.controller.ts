@@ -6,7 +6,7 @@ import { Roles } from 'src/common/decorators/role.decorators';
 import { UserInfo } from 'src/common/decorators/user.decorators';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { ROLE_USER, User } from 'src/database/user.model';
-import { dtoCommentToChapter, dtoCommentToManga, dtoListCommentManga } from './comment.dto';
+import { dtoCommentToChapter, dtoCommentToManga, dtoListCommentChapter, dtoListCommentManga } from './comment.dto';
 import { CommentService } from './comment.service';
 @ApiHeader({
     name: 'token',
@@ -30,7 +30,7 @@ export class CommentController {
     @Post("comment-chapter")
     @ApiOperation({summary:"Comment To Chapter"})
     @ApiResponse({ status: 200, description: 'Comment Success Full.'})
-    @Roles(RoleType.MEMBER)
+    @Roles(RoleType.USER)
     @UsePipes(new ValidationPipe())
     async commentToChapter(@Body()dataComment:dtoCommentToChapter,@UserInfo()user:User){
         const comment = await this.commentService.commentToChapter(dataComment.chapter_id,user._id,dataComment.message);
@@ -42,6 +42,14 @@ export class CommentController {
     @UsePipes(new ValidationPipe())
     async getListCommentManga(@Body()dataComment:dtoListCommentManga){
         const listComment = await this.commentService.getListCommentInManga(dataComment.manga_id,dataComment.page,dataComment.numberItem);
+        return (new ApiResult().success(listComment))
+    }
+    @Post("list-comment-chapter")
+    @ApiOperation({summary:"Get List Comment Chapter"})
+    @ApiResponse({ status: 200, description: 'get List Comment Success Full.'})
+    @UsePipes(new ValidationPipe())
+    async getListCommentChapter(@Body()dataComment:dtoListCommentChapter){
+        const listComment = await this.commentService.getListCommentInChapter(dataComment.chapter_id,dataComment.page,dataComment.numberItem);
         return (new ApiResult().success(listComment))
     }
 }

@@ -38,6 +38,13 @@ export class CommentService {
         }).populate({
             path:"chapter",
             select:"title index _id"
-        }).skip((page-1)*numberItem).limit(numberItem).select("-reply");
+        }).sort({createdAt:-1})
+        .skip((page-1)*numberItem).limit(numberItem).select("-reply");
+    }
+    async getListCommentInChapter(chapter_id:string,page:number,numberItem:number):Promise<Array<Comment>>{
+        return this.commentModel.find({
+            chapter:chapter_id
+        }).sort({createdAt:-1})
+        .skip((page-1)*numberItem).limit(numberItem).select("-reply");
     }
 }

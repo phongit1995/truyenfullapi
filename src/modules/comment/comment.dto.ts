@@ -31,3 +31,17 @@ export class dtoListCommentManga{
     @IsMongoId()
     manga_id:string;
 }
+export class dtoListCommentChapter{
+    @ApiProperty({minimum:1,example:1})
+    @IsNumber()
+    @Min(1)
+    page:number=1;
+    @ApiProperty({minimum:1,example:10})
+    @IsNumber()
+    @IsOptional()
+    @Min(1)
+    numberItem:number=10
+    @ApiProperty({title:"chapter id"})
+    @IsMongoId()
+    chapter_id:string;
+}
