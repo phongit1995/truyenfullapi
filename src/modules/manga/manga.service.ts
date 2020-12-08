@@ -92,4 +92,7 @@ export class MangaService {
     async IncreaseViewsManga(manga_id:string,view:number):Promise<void>{
         await this.mangaModel.findByIdAndUpdate(manga_id,{$inc:{views:view}})
     }
+    async addCountComment(manga_id:string,numberComment:number=1):Promise<void>{
+        await this.mangaModel.findByIdAndUpdate(manga_id,{$inc:{commentCount:numberComment}})
+    }
 }

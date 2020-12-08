@@ -26,7 +26,7 @@ export class ChapterService {
         await this.cacheService.set(KEY_CACHE,dataCache,1000*60*30);
         return dataCache;
     }
-    async getDetialChapter(chapter_id:string):Promise<any>{
+    async getDetialChapter(chapter_id:string):Promise<Chapter>{
         const KEY_CACHE= "CACHE_DETIAL_CHAPTER_"+chapter_id;
         let dataCache= await this.cacheService.get<Chapter>(KEY_CACHE);
         if(dataCache){
@@ -73,7 +73,10 @@ export class ChapterService {
         }
         await this.cacheService.set(KEY_CACHE_VIEW_MANGA,dataKey+1);
     }
-    async deleteContentChapter(manga_id:string):Promise<Chapter>{
-        return this.chapterModel.findByIdAndUpdate(manga_id,{$unset:{content:""}});
+    async deleteContentChapter(chapter_id:string):Promise<Chapter>{
+        return this.chapterModel.findByIdAndUpdate(chapter_id,{$unset:{content:""}});
+    }
+    async addCommentCount(chapter_id:string,numberComment:number=1):Promise<any>{
+        return this.chapterModel.findByIdAndUpdate(chapter_id,{$inc:{commentCount:numberComment}})
     }
 }
