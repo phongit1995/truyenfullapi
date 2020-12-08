@@ -18,6 +18,10 @@ export const chapterSchema:mongoose.Schema = new mongoose.Schema({
     content:{
         type:String
     },
+    commentCount:{
+        type:Number,
+        default:0
+    },
     images:[
         {
             type:String
@@ -33,5 +37,6 @@ export interface Chapter extends mongoose.Document {
     content?:string,
     title?:string,
     url?:string,
+    commentCount:number,
     status_update_images?:boolean
 }

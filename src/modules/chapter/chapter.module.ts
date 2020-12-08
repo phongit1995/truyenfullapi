@@ -11,6 +11,7 @@ import { MangaModule } from '../manga/manga.module';
     MongooseModule.forFeature([{name:"chapter",schema:chapterSchema}]),
   ],
   providers: [ChapterService],
-  controllers: [ChapterController]
+  controllers: [ChapterController],
+  exports:[ChapterService]
 })
 export class ChapterModule {}

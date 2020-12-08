@@ -40,6 +40,10 @@ export const mangaSchema:mongoose.Schema = new mongoose.Schema({
         type:Boolean,
         default:true
     },
+    commentCount:{
+        type:Number,
+        default:0
+    },
     devices:[
         {
             type:String
@@ -59,6 +63,7 @@ export interface Manga extends mongoose.Document {
     chapters?:Array<string>,
     chapter_update?:Date,
     source?:string,
+    commentCount?:number,
     first_chapter?:string,
     devices?:Array<string>
 }
