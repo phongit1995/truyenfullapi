@@ -2,6 +2,7 @@ import { Injectable, CanActivate, ExecutionContext, HttpException, HttpStatus } 
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { ROLE_USER, User } from 'src/database/user.model';
+import { ERROR_TYPE } from '../constants/error';
 import { RoleType } from '../constants/role-type';
 
 @Injectable()
@@ -20,7 +21,7 @@ export class RolesGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     let user = <User> request.user;
     if(!user){
-      throw new HttpException("Not Permission",HttpStatus.BAD_REQUEST);
+      throw new HttpException(ERROR_TYPE.PLEASE_LOGIN_USER,HttpStatus.BAD_REQUEST);
     }
     return true ;
   }

@@ -4,7 +4,10 @@ export enum ROLE_USER{
     ADMIN="ADMIN"
 }
 export const userSchema:mongoose.Schema = new mongoose.Schema({
-    name:String,
+    name:{
+        type:String,
+        default:"user"
+    },
     email:String,
     password:String,
     avatar:{

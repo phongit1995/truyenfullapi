@@ -38,13 +38,49 @@ export class CommentService {
         }).populate({
             path:"chapter",
             select:"title index _id"
-        }).sort({createdAt:-1})
+        })
+        .populate({
+            path:'user',
+            select:"name avatar _id"
+        })
+        .sort({createdAt:-1})
         .skip((page-1)*numberItem).limit(numberItem).select("-reply");
     }
     async getListCommentInChapter(chapter_id:string,page:number,numberItem:number):Promise<Array<Comment>>{
         return this.commentModel.find({
             chapter:chapter_id
+        })
+        .populate({
+            path:'user',
+            select:"name avatar _id"
         }).sort({createdAt:-1})
         .skip((page-1)*numberItem).limit(numberItem).select("-reply");
+    }
+    async getDetialComment(comment_id:string):Promise<Comment>{
+        return this.commentModel.findById(comment_id)
+        .populate({
+            path:'user',
+            select:"name avatar _id"
+        })
+        .populate({
+            path:"reply.user",
+            select:"name avatar _id"
+        })
+    }
+    async replyComment(user_id:string,comment_id:string,message:string):Promise<Comment>{
+        const comment = await this.commentModel.findById(comment_id);
+        if(!comment){
+            throw new HttpException(ERROR_TYPE.COMMENT_NOT_FOUND_OR_DELETED,HttpStatus.BAD_REQUEST)
+        }
+        return this.commentModel.findByIdAndUpdate(
+        comment_id,{
+            $inc:{replyCount:1},
+            $push:{
+                reply:{
+                    user:user_id,
+                    message:message
+                }
+            }
+        })
     }
 }

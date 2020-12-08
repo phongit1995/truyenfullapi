@@ -31,7 +31,7 @@ export const CommentSchema:mongoose.Schema = new mongoose.Schema({
     reply:[ReplySchema]
 },
 {timestamps:true})
-interface ReplyComment extends mongoose.Document {
+interface ReplyComment {
     user?:string,
     message?:string
 }

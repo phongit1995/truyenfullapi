@@ -1,12 +1,12 @@
 import { Body, Controller, Post, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ApiConsumes, ApiHeader, ApiOperation, ApiResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResult } from 'src/common/api-result';
 import { RoleType } from 'src/common/constants/role-type';
 import { Roles } from 'src/common/decorators/role.decorators';
 import { UserInfo } from 'src/common/decorators/user.decorators';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { ROLE_USER, User } from 'src/database/user.model';
-import { dtoCommentToChapter, dtoCommentToManga, dtoListCommentChapter, dtoListCommentManga } from './comment.dto';
+import { dtoCommentToChapter, dtoCommentToManga, dtoDetialComment, dtoListCommentChapter, dtoListCommentManga ,dtoReplyComment} from './comment.dto';
 import { CommentService } from './comment.service';
 @ApiHeader({
     name: 'token',
@@ -51,5 +51,22 @@ export class CommentController {
     async getListCommentChapter(@Body()dataComment:dtoListCommentChapter){
         const listComment = await this.commentService.getListCommentInChapter(dataComment.chapter_id,dataComment.page,dataComment.numberItem);
         return (new ApiResult().success(listComment))
+    }
+    @Post("reply-comment")
+    @ApiOperation({summary:" Add Reply Comment "})
+    @ApiResponse({ status: 200, description: 'Add Reply Comment Success Full.'})
+    @Roles(RoleType.USER)
+    @UsePipes(new ValidationPipe())
+    async addReplyComment(@UserInfo() user:User,@Body()dataReply:dtoReplyComment){
+        const comment = await this.commentService.replyComment(user._id,dataReply.comment_id,dataReply.message);
+        return (new ApiResult().success(comment))
+    }
+    @Post("detial-comment")
+    @ApiOperation({summary:" Get Detial  Comment "})
+    @ApiResponse({ status: 200, description: 'Get Detial  Comment Success Full.'})
+    @UsePipes(new ValidationPipe())
+    async getDetialComment(@Body()dataDetial:dtoDetialComment){
+        const comment = await this.commentService.getDetialComment(dataDetial.comment_id);
+        return (new ApiResult().success(comment))
     }
 }

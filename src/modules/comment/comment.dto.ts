@@ -45,3 +45,16 @@ export class dtoListCommentChapter{
     @IsMongoId()
     chapter_id:string;
 }
+export class dtoReplyComment{
+    @ApiProperty({title:"comment id"})
+    @IsMongoId()
+    comment_id:string;
+    @ApiProperty({title:"message of User"})
+    @IsString()
+    message:string
+}
+export class dtoDetialComment{
+    @ApiProperty({title:"comment id"})
+    @IsMongoId()
+    comment_id:string;
+}
