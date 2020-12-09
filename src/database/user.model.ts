@@ -1,4 +1,5 @@
 import * as mongoose  from 'mongoose';
+import { GENDER_TYPE } from 'src/common/constants/role-type';
 export enum ROLE_USER{
     MEMBER="MEMBER",
     ADMIN="ADMIN"
@@ -19,7 +20,7 @@ export const userSchema:mongoose.Schema = new mongoose.Schema({
     },
     gender:{
         type:Number,
-        default:1
+        default:GENDER_TYPE.FEMALE
     },
     role:{
         type:String,

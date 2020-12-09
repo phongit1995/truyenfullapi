@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsString, Min } from "class-validator";
+import { IsEmail, IsEnum, IsNumber, IsOptional, IsString, Min } from "class-validator";
+import { GENDER_TYPE } from "src/common/constants/role-type";
 
 export class dtoRegisterUser{
     @ApiProperty({example:"test@gmail.com"})
@@ -20,4 +21,23 @@ export class dtoLoginUser{
 export class dtoDevicesUser{
     @ApiProperty({example:"adwndnanwudnmamakdnwiundwk"})
     devices:string;
+}
+export class dtoUpdateUserInfo{
+    @ApiProperty({example:"Name User"})
+    @IsString()
+    @IsOptional()
+    name?:string
+    @ApiProperty({example:"Avatar User"})
+    @IsString()
+    @IsOptional()
+    avatar?:string
+    @ApiProperty({example:"Phone User"})
+    @IsString()
+    @IsOptional()
+    phone?:string
+    @ApiProperty({example:0})
+    @IsEnum(GENDER_TYPE)
+    @IsOptional()
+    @IsNumber()
+    gender?:number
 }

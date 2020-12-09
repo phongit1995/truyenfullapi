@@ -3,7 +3,7 @@ import { ApiConsumes, ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nes
 import { ApiResult } from 'src/common/api-result';
 import { RoleType } from 'src/common/constants/role-type';
 import { RolesGuard } from 'src/common/guards/roles.guard';
-import { dtoLoginUser, dtoRegisterUser ,dtoDevicesUser } from './user.dto';
+import { dtoLoginUser, dtoRegisterUser ,dtoDevicesUser, dtoUpdateUserInfo } from './user.dto';
 import { UserService } from './user.service';
 import { Roles } from 'src/common/decorators/role.decorators';
 import { UserInfo } from 'src/common/decorators/user.decorators';
@@ -42,5 +42,14 @@ export class UserController {
     async addDevicesUser(@Body()dataDevices:dtoDevicesUser,@UserInfo()user:User){
         await this.userService.addDevicesUser(user._id,dataDevices.devices);
         return (new ApiResult().success())
+    }
+    @Post("update-user-info")
+    @ApiOperation({summary:"Update User Info"})
+    @ApiResponse({ status: 200, description: 'Update User Info Success.'})
+    @Roles(RoleType.USER)
+    @UsePipes(new ValidationPipe({transform:true}))
+    async updateUserInfo(@Body()dataUpdate:dtoUpdateUserInfo,@UserInfo()user:User){
+       await this.userService.updateUserInfo(user._id,dataUpdate);
+       return (new ApiResult().success())
     }
 }
