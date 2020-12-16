@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiConsumes, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResult } from 'src/common/api-result';
-import { dtoAddDeviceManga, dtoGetDetialManga, dtoGetListManga, dtoGetListMangaByCategory, dtoHiddenManga, dtoRemoveDeviceManga, dtoSearchManga } from './manga.dto';
+import { dtoAddDeviceManga, dtoGetDetialManga, dtoGetListManga, dtoGetListMangaByCategory, dtoHiddenManga, dtoRemoveDeviceManga, dtoSearchManga, dtoSuggestManga } from './manga.dto';
 import { MangaService } from './manga.service';
 
 @ApiTags("manga")
@@ -66,5 +66,13 @@ export class MangaController {
     async removeDevicesToManga(@Body()dataAdd:dtoRemoveDeviceManga){
         await this.mangaService.removeDevicesToManga(dataAdd.manga_id,dataAdd.device);
         return (new ApiResult().success())
+    }
+    @Post("suggest-manga")
+    @ApiOperation({summary:"List Suggest Manga"})
+    @ApiResponse({ status: 200, description: 'List Suggest Manga Success Fully.'})
+    @UsePipes(new ValidationPipe({transform:true}))
+    async suggestToManga(@Body()dataSuggest:dtoSuggestManga){
+        const listSuggest= await this.mangaService.listSuggestManga(dataSuggest.category,dataSuggest.page,dataSuggest.numberItem);
+        return (new ApiResult().success(listSuggest))
     }
 }

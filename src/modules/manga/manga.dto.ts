@@ -77,3 +77,16 @@ export class dtoRemoveDeviceManga{
     @IsString()
     device:string;
 }
+export class dtoSuggestManga{
+    @ApiProperty({description:'Category Of Manga'})
+    @IsString({each:true})
+    @IsOptional()
+    category:Array<string>;
+    @ApiProperty({description:"Page Number",example:1})
+    @IsNumber()
+    page:number=1;
+    @ApiProperty({description:"Number Of Page",example:10})
+    @IsNumber()
+    @IsOptional()
+    numberItem:number=10;
+}

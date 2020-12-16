@@ -95,4 +95,16 @@ export class MangaService {
     async addCountComment(manga_id:string,numberComment:number=1):Promise<void>{
         await this.mangaModel.findByIdAndUpdate(manga_id,{$inc:{commentCount:numberComment}})
     }
+    async listSuggestManga(category:string[],page:number,numberItem:number){
+        console.log(category);
+        return this.mangaModel.find({
+            "category":{
+                $in:category
+            }
+        })
+        .select("-category -chapters")
+        .sort({"devices.length":-1})
+        .skip((page-1)*numberItem)
+        .limit(numberItem)
+    }
 }
