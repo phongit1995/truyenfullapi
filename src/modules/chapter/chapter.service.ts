@@ -46,6 +46,15 @@ export class ChapterService {
             chapter.content = content ;
             await chapter.save();
         }
+        if(chapter.before==undefined &&chapter.after==undefined){
+            const [beforeChapter,afterChapter]= await Promise.all([
+                this.chapterModel.findOne({manga:chapter.manga,index:chapter.index-1}),
+                this.chapterModel.findOne({manga:chapter.manga,index:chapter.index+1})
+            ])
+            chapter.before=  beforeChapter?._id ;
+            chapter.after = afterChapter?._id ;
+            await chapter.save();
+        }
         await this.cacheService.set(KEY_CACHE,chapter,1000*60*60*12);
         await this.IncrementToManga(chapter.manga as string);
         return chapter ;
