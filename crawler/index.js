@@ -39,7 +39,7 @@ let queue  = kue.createQueue({
 //         console.log(error);
 //     })
 // })
-//getListLinkInPage(4);
+// //getListLinkInPage(4);
 listCommitNotUpdate().then(data=>{
     data.forEach((item)=>{
         let job = queue.create("getChapterComic",{url:item.url,id:item._id}).delay(500).save(function(error) {

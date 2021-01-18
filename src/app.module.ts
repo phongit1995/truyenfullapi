@@ -6,9 +6,10 @@ import { CategoryModule } from './modules/category/category.module';
 import { UserModule } from './modules/user/user.module';
 import { CommentModule } from './modules/comment/comment.module';
 import { RequestCheckMiddleware } from './common/middleware/usermiddleware';
+import { UploadModule } from './modules/upload/upload.module';
 
 @Module({
-  imports: [ShareModule, MangaModule, ChapterModule,CategoryModule,UserModule, CommentModule],
+  imports: [ShareModule, MangaModule, ChapterModule,CategoryModule,UserModule, CommentModule, UploadModule],
   controllers: [],
   providers: [],
 })
