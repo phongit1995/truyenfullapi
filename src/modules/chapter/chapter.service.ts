@@ -26,7 +26,7 @@ export class ChapterService {
         .skip((page-1)*numberItem)
         .limit(numberItem)
         .sort({index:1})
-        .select("-images -url -updatedAt -source -manga");
+        .select("-images -url -updatedAt -source -manga -content");
         await this.cacheService.set(KEY_CACHE,dataCache,1000*60*30);
         return dataCache;
     }
