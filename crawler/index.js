@@ -49,7 +49,7 @@ listCommitNotUpdate().then(data=>{
         
     })
 })
-queue.process("getChapterComic",1, function(job,done){
+queue.process("getChapterComic",2, function(job,done){
     getDetialComic(job.data.url,job.data.id).then((data)=>{
         console.log(job.data.url + " : So Page " + data.lengthPage  + "  Số Chapter : " + data.Chapter );
         done()

@@ -7,9 +7,10 @@ import { UserModule } from './modules/user/user.module';
 import { CommentModule } from './modules/comment/comment.module';
 import { RequestCheckMiddleware } from './common/middleware/usermiddleware';
 import { UploadModule } from './modules/upload/upload.module';
+import { VersionModule } from './modules/version/version.module';
 
 @Module({
-  imports: [ShareModule, MangaModule, ChapterModule,CategoryModule,UserModule, CommentModule, UploadModule],
+  imports: [ShareModule, MangaModule, ChapterModule,CategoryModule,UserModule, CommentModule, UploadModule, VersionModule],
   controllers: [],
   providers: [],
 })
