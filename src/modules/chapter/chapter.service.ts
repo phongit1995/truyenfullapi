@@ -25,7 +25,7 @@ export class ChapterService {
         })
         .skip((page-1)*numberItem)
         .limit(numberItem)
-        .sort({index:-1})
+        .sort({index:1})
         .select("-images -url -updatedAt -source -manga");
         await this.cacheService.set(KEY_CACHE,dataCache,1000*60*30);
         return dataCache;
@@ -55,7 +55,7 @@ export class ChapterService {
             chapter.after = afterChapter?._id ;
             await chapter.save();
         }
-        await this.cacheService.set(KEY_CACHE,chapter,1000*60*60*12);
+        await this.cacheService.set(KEY_CACHE,chapter,1000*60*30);
         await this.IncrementToManga(chapter.manga as string);
         return chapter ;
     }
