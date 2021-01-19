@@ -13,8 +13,11 @@ export class ChapterController {
     @ApiResponse({ status: 200, description: 'Get List Chapter Success Fully.'})
     @UsePipes(new ValidationPipe())
     async getListChapter(@Body()dataGet:dtoGetListChapter){
-        const listChapter = await this.chapterService.getListChapterManga(dataGet.manga_id,dataGet.page,dataGet.numberItem);
-        return (new ApiResult().success(listChapter))
+        const [listChapter,totalChapter] = await Promise.all([
+            this.chapterService.getListChapterManga(dataGet.manga_id,dataGet.page,dataGet.numberItem),
+            this.chapterService.totalNumberChapter(dataGet.manga_id)
+        ])
+        return (new ApiResult().success(listChapter,totalChapter))
     }
     @Post("detial-chapter")
     @ApiOperation({summary:"Get Detial Chapter"})

@@ -12,11 +12,13 @@ export class ApiResult<T> {
     public errorCode: string;
   
     public message: string;
+    public numberResult:number;
   
     public data: T;
-    public success(data?: T, message?: string) {
+    public success(data?: T, numberResult?:number,message?: string) {
       this.status = ApiStatus.SUCCESS;
       this.code = HttpStatus.OK;
+      this.numberResult= numberResult;
       if (message) { this.message = 'OK'; }
       this.data = data;
   

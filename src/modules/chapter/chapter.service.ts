@@ -30,6 +30,18 @@ export class ChapterService {
         await this.cacheService.set(KEY_CACHE,dataCache,1000*60*30);
         return dataCache;
     }
+    async totalNumberChapter(manga_id:string):Promise<number>{
+        const KEY_CACHE:string="NUMBER_CHAPTER_"+ manga_id ;
+        let resultCacheNumberChapter = await this.cacheService.get<number>(KEY_CACHE);
+        if(resultCacheNumberChapter){
+            return resultCacheNumberChapter;
+        }
+        resultCacheNumberChapter=await  this.chapterModel.countDocuments({
+            manga:manga_id
+        })
+        await this.cacheService.set(KEY_CACHE,resultCacheNumberChapter,1000*60*5);
+        return resultCacheNumberChapter;
+    }
     async getDetialChapter(chapter_id:string):Promise<Chapter>{
         const KEY_CACHE= "CACHE_DETIAL_CHAPTER_"+chapter_id;
         let dataCache= await this.cacheService.get<Chapter>(KEY_CACHE);
