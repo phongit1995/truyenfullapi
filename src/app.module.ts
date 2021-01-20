@@ -8,9 +8,10 @@ import { CommentModule } from './modules/comment/comment.module';
 import { RequestCheckMiddleware } from './common/middleware/usermiddleware';
 import { UploadModule } from './modules/upload/upload.module';
 import { VersionModule } from './modules/version/version.module';
+import { CronjobModule } from './modules/cronjob/cronjob.module';
 
 @Module({
-  imports: [ShareModule, MangaModule, ChapterModule,CategoryModule,UserModule, CommentModule, UploadModule, VersionModule],
+  imports: [ShareModule, MangaModule, ChapterModule,CategoryModule,UserModule, CommentModule, UploadModule, VersionModule, CronjobModule],
   controllers: [],
   providers: [],
 })
