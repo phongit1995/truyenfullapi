@@ -97,6 +97,7 @@ const getListChapterInPageLink = async(url,page)=>{
         const urlChapter = $(this).attr("href");
         Chapter.push({name:nameChapter,url:urlChapter});
     })
+    
     return Chapter;
 }
 const getContentComic = async(url)=>{

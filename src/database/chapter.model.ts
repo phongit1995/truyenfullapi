@@ -47,6 +47,6 @@ export interface Chapter extends mongoose.Document {
     url?:string,
     before?:string,
     after?:string,
-    commentCount:number,
+    commentCount?:number,
     status_update_images?:boolean
 }
