@@ -1,8 +1,13 @@
 import { Body, Controller, Get, Post, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResult } from 'src/common/api-result';
 import { dtoCreateNewCategory } from './category.dto';
 import { CategoryService } from './category.service';
+@ApiHeader({
+    name: 'admin',
+    description: 'admin key',
+    example:"ADMIN"
+})
 @ApiTags('category')
 @Controller('category')
 export class CategoryController {

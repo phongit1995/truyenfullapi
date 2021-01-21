@@ -12,6 +12,11 @@ import { CommentService } from './comment.service';
     name: 'token',
     description: 'Token Of User'
 })
+@ApiHeader({
+    name: 'admin',
+    description: 'admin key',
+    example:"ADMIN"
+})
 @ApiTags("Comment")
 @ApiConsumes("Comment Api")
 @Controller('comment')

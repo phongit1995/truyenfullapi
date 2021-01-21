@@ -1,5 +1,5 @@
 import { Body, Controller, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ApiConsumes, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResult } from 'src/common/api-result';
 import { RoleType } from 'src/common/constants/role-type';
 import { Roles } from 'src/common/decorators/role.decorators';
@@ -8,7 +8,15 @@ import { RolesGuard } from 'src/common/guards/roles.guard';
 import { User } from 'src/database/user.model';
 import { dtoAddDeviceManga, dtoGetDetialManga, dtoGetListManga, dtoGetListMangaByCategory, dtoHiddenManga, dtoRemoveDeviceManga, dtoSearchManga, dtoSuggestManga, dtoUserFollowManga, dtoUserUnFollowManga } from './manga.dto';
 import { MangaService } from './manga.service';
-
+@ApiHeader({
+    name: 'token',
+    description: 'Token Of User'
+})
+@ApiHeader({
+    name: 'admin',
+    description: 'admin key',
+    example:"ADMIN"
+})
 @ApiTags("manga")
 @ApiConsumes("Manga Api")
 @Controller('manga')

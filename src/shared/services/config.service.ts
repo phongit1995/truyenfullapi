@@ -7,6 +7,7 @@ export class ConfigServer {
         MONGO_URL:Joi.string(),
         JWT_SECRET:Joi.string().required(),
         SERVER_PUSH_KEY:Joi.string().required(),
+        SECRET_API:Joi.string().required()
     }
     constructor(){
         let config = dotenv.config();
@@ -23,6 +24,9 @@ export class ConfigServer {
     }
     get  jwtSecret ():string {
         return this.envConfig.JWT_SECRET ;
+    }
+    get secret_api():string{
+        return this.envConfig.SECRET_API;
     }
     get mongo_url():string{
         return this.envConfig.MONGO_URL

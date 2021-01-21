@@ -8,7 +8,7 @@ export function setUpSwagger(app:INestApplication):void{
     .addTag('Manga')
     .setDescription("API MANGA FOR APP")
     .setContact("Phong Dinh Nguyen","https://www.facebook.com/phongdinhnguyen123/","phong123@gmail.com")
-    .addApiKey({type: 'apiKey', name: 'authorization', in: 'header'})
+    .addApiKey({type: 'apiKey', name: 'admin', in: 'header'})
     .build();
     app.use(swStats.getMiddleware({
         name: 'API SAVE ME ',

@@ -1,8 +1,17 @@
 import { Body, Controller, Post, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ApiConsumes, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResult } from 'src/common/api-result';
 import { dtoGetListChapter ,dtoGetDetialChapter, dtoDeleteContentChapter } from './chapter.dto';
 import { ChapterService } from './chapter.service';
+@ApiHeader({
+    name: 'token',
+    description: 'Token Of User'
+})
+@ApiHeader({
+    name: 'admin',
+    description: 'admin key',
+    example:"ADMIN"
+})
 @ApiTags("chapter")
 @ApiConsumes("chapter Api")
 @Controller('chapter')

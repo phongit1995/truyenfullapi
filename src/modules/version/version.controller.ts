@@ -10,6 +10,11 @@ import { VersionService } from './version.service';
     name: 'token',
     description: 'Token Of User'
 })
+@ApiHeader({
+    name: 'admin',
+    description: 'admin key',
+    example:"ADMIN"
+})
 @ApiTags("Version")
 @ApiConsumes("Version Api")
 @UseGuards(RolesGuard)

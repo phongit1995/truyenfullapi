@@ -1,6 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express';
+import { ConfigServer } from 'src/shared/services/config.service';
 @Injectable()
 export class RequestCheckMiddleware implements NestMiddleware {
     constructor(private jwtService: JwtService){}
@@ -17,3 +18,4 @@ export class RequestCheckMiddleware implements NestMiddleware {
         next();
     }
 }
+

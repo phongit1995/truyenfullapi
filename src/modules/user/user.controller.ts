@@ -12,6 +12,10 @@ import { User } from 'src/database/user.model';
     name: 'token',
     description: 'Token Of User'
 })
+@ApiHeader({
+    name: 'admin',
+    description: 'admin key'
+})
 @ApiTags("User")
 @ApiConsumes("User Api")
 @UseGuards(RolesGuard)

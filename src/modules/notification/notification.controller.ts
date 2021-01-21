@@ -8,6 +8,11 @@ import { NotificationService } from './notification.service';
     name: 'token',
     description: 'Token Of User'
 })
+@ApiHeader({
+    name: 'admin',
+    description: 'admin key',
+    example:"ADMIN"
+})
 @ApiTags("Notification")
 @ApiConsumes("Notification Api")
 @UseGuards(RolesGuard)
