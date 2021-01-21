@@ -25,7 +25,7 @@ export class MangaService {
         listManga = await this.mangaModel.find({enable:true})
         .skip((dataGet.page-1)*dataGet.numberItem)
         .limit(dataGet.numberItem).sort(sortOptions)
-        .select("-chapters user_follow");
+        .select("-chapters -user_follow");
         await this.cacheService.set(KEY_CACHE,listManga);
         return listManga;
     }
@@ -49,7 +49,7 @@ export class MangaService {
         listManga = await this.mangaModel.find({category:dataGet.category,enable:true})
         .skip((dataGet.page-1)*dataGet.numberItem)
         .limit(dataGet.numberItem).sort(sortOptions)
-        .select("-chapters user_follow");
+        .select("-chapters -user_follow");
         await this.cacheService.set(KEY_CACHE,listManga);
         return listManga;
     }
@@ -60,7 +60,7 @@ export class MangaService {
         })
         .skip((dataSearch.page-1)*dataSearch.numberItem)
         .limit(dataSearch.numberItem).sort({views:-1})
-        .select("-chapters");
+        .select("-chapters -user_follow");
     }
     async HiddenManga(manga_id:string[]):Promise<any>{
         return this.mangaModel.updateMany({
@@ -101,7 +101,7 @@ export class MangaService {
                 $in:category
             }
         })
-        .select("-category -chapters user_follow")
+        .select("-category -chapters -user_follow")
         .sort({"devices.length":-1})
         .skip((page-1)*numberItem)
         .limit(numberItem)
