@@ -1,12 +1,18 @@
-import { Body, Controller, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiConsumes, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResult } from 'src/common/api-result';
-import { dtoAddDeviceManga, dtoGetDetialManga, dtoGetListManga, dtoGetListMangaByCategory, dtoHiddenManga, dtoRemoveDeviceManga, dtoSearchManga, dtoSuggestManga } from './manga.dto';
+import { RoleType } from 'src/common/constants/role-type';
+import { Roles } from 'src/common/decorators/role.decorators';
+import { UserInfo } from 'src/common/decorators/user.decorators';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { User } from 'src/database/user.model';
+import { dtoAddDeviceManga, dtoGetDetialManga, dtoGetListManga, dtoGetListMangaByCategory, dtoHiddenManga, dtoRemoveDeviceManga, dtoSearchManga, dtoSuggestManga, dtoUserFollowManga, dtoUserUnFollowManga } from './manga.dto';
 import { MangaService } from './manga.service';
 
 @ApiTags("manga")
 @ApiConsumes("Manga Api")
 @Controller('manga')
+@UseGuards(RolesGuard)
 export class MangaController {
     constructor(
         private mangaService:MangaService
@@ -51,20 +57,38 @@ export class MangaController {
         let resultGame = await this.mangaService.HiddenManga(dataHidden.manga_id);
         return (new ApiResult().success())
     }
-    @Post("add-devices")
-    @ApiOperation({summary:"Add Devices When Follow Manga "})
+    @Post("follow-manga")
+    @ApiOperation({summary:"Add Devices When Follow Manga. User Not Login "})
     @ApiResponse({ status: 200, description: 'Add Device Success Fully.'})
     @UsePipes(new ValidationPipe({transform:true}))
     async addDevicesToManga(@Body()dataAdd:dtoAddDeviceManga){
         await this.mangaService.addDevicesToManga(dataAdd.manga_id,dataAdd.device);
         return (new ApiResult().success())
     }
-    @Post("remove-devices")
+    @Post("un-follow-manga")
     @ApiOperation({summary:"Remove Devices When UnFollow Manga "})
     @ApiResponse({ status: 200, description: 'Remove Device Success Fully.'})
     @UsePipes(new ValidationPipe({transform:true}))
     async removeDevicesToManga(@Body()dataAdd:dtoRemoveDeviceManga){
         await this.mangaService.removeDevicesToManga(dataAdd.manga_id,dataAdd.device);
+        return (new ApiResult().success())
+    }
+    @Post("user-follow-manga")
+    @ApiOperation({summary:"User follow Manga. User Is Login "})
+    @ApiResponse({ status: 200, description: 'User follow Manga Success Fully.'})
+    @UsePipes(new ValidationPipe({transform:true}))
+    @Roles(RoleType.USER)
+    async userFollowManga(@UserInfo()user:User,@Body()data:dtoUserFollowManga){
+        await this.mangaService.addUserFollowManga(user._id,data.manga_id);
+        return (new ApiResult().success())
+    }
+    @Post("user-un-follow-manga")
+    @ApiOperation({summary:"User Un follow Manga. User Is Login "})
+    @ApiResponse({ status: 200, description: 'User  Un follow Manga Success Fully.'})
+    @UsePipes(new ValidationPipe({transform:true}))
+    @Roles(RoleType.USER)
+    async userUnFollowManga(@UserInfo()user:User,@Body()data:dtoUserUnFollowManga){
+        await this.mangaService.userUnFollowManga(data.manga_id,user._id);
         return (new ApiResult().success())
     }
     @Post("suggest-manga")

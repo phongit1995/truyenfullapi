@@ -3,7 +3,7 @@ import { ApiConsumes, ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nes
 import { ApiResult } from 'src/common/api-result';
 import { RoleType } from 'src/common/constants/role-type';
 import { RolesGuard } from 'src/common/guards/roles.guard';
-import { dtoLoginUser, dtoRegisterUser ,dtoDevicesUser, dtoUpdateUserInfo } from './user.dto';
+import { dtoLoginUser, dtoRegisterUser ,dtoDevicesUser, dtoUpdateUserInfo ,dtoRemoveDevicesUser} from './user.dto';
 import { UserService } from './user.service';
 import { Roles } from 'src/common/decorators/role.decorators';
 import { UserInfo } from 'src/common/decorators/user.decorators';
@@ -43,6 +43,16 @@ export class UserController {
         await this.userService.addDevicesUser(user._id,dataDevices.devices);
         return (new ApiResult().success())
     }
+    @Post("remove-devices-user")
+    @ApiOperation({summary:"User Remove Devices When Logout"})
+    @ApiResponse({ status: 200, description: 'User Remove Devices When Logout Success Fully.'})
+    @Roles(RoleType.USER)
+    @UsePipes(new ValidationPipe({transform:true}))
+    async userRemoveDevices(@UserInfo()user:User,@Body()dataRemove:dtoRemoveDevicesUser){
+        await this.userService.removeDeviceUser(user._id,dataRemove.devices);
+        return (new ApiResult().success())
+    }
+
     @Post("update-user-info")
     @ApiOperation({summary:"Update User Info"})
     @ApiResponse({ status: 200, description: 'Update User Info Success.'})

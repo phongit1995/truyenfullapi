@@ -48,6 +48,12 @@ export const mangaSchema:mongoose.Schema = new mongoose.Schema({
         {
             type:String
         }
+    ],
+    user_follow:[
+        {
+            type:mongoose.Types.ObjectId,
+            ref:'chapter'
+        }
     ]
 },{timestamps:true})
 export interface Manga extends mongoose.Document {
@@ -65,5 +71,6 @@ export interface Manga extends mongoose.Document {
     source?:string,
     commentCount?:number,
     first_chapter?:string,
-    devices?:Array<string>
+    devices?:Array<string>,
+    user_follow?:Array<string>
 }

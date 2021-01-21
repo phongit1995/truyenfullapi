@@ -22,6 +22,10 @@ export class dtoDevicesUser{
     @ApiProperty({example:"adwndnanwudnmamakdnwiundwk"})
     devices:string;
 }
+export class dtoRemoveDevicesUser{
+    @ApiProperty({example:"adwndnanwudnmamakdnwiundwk"})
+    devices:string;
+}
 export class dtoUpdateUserInfo{
     @ApiProperty({example:"Name User"})
     @IsString()

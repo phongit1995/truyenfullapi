@@ -25,7 +25,7 @@ export class MangaService {
         listManga = await this.mangaModel.find({enable:true})
         .skip((dataGet.page-1)*dataGet.numberItem)
         .limit(dataGet.numberItem).sort(sortOptions)
-        .select("-chapters");
+        .select("-chapters user_follow");
         await this.cacheService.set(KEY_CACHE,listManga);
         return listManga;
     }
@@ -49,7 +49,7 @@ export class MangaService {
         listManga = await this.mangaModel.find({category:dataGet.category,enable:true})
         .skip((dataGet.page-1)*dataGet.numberItem)
         .limit(dataGet.numberItem).sort(sortOptions)
-        .select("-chapters");
+        .select("-chapters user_follow");
         await this.cacheService.set(KEY_CACHE,listManga);
         return listManga;
     }
@@ -96,15 +96,28 @@ export class MangaService {
         await this.mangaModel.findByIdAndUpdate(manga_id,{$inc:{commentCount:numberComment}})
     }
     async listSuggestManga(category:string[],page:number,numberItem:number){
-        console.log(category);
         return this.mangaModel.find({
             "category":{
                 $in:category
             }
         })
-        .select("-category -chapters")
+        .select("-category -chapters user_follow")
         .sort({"devices.length":-1})
         .skip((page-1)*numberItem)
         .limit(numberItem)
+    }
+    async addUserFollowManga(user_id:string,manga_id:string){
+        return this.mangaModel.findByIdAndUpdate(manga_id,{
+            $addToSet:{
+                user_follow:user_id
+            }
+        })
+    }
+    async userUnFollowManga(manga_id:string,user_id:string){
+        return this.mangaModel.findByIdAndUpdate(manga_id,{
+            $pull:{
+                user_follow:user_id
+            }
+        })
     }
 }

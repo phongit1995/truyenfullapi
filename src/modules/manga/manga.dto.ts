@@ -90,3 +90,13 @@ export class dtoSuggestManga{
     @IsOptional()
     numberItem:number=10;
 }
+export class dtoUserFollowManga{
+    @ApiProperty({description:"Manga Id"})
+    @IsMongoId()
+    manga_id:string
+}
+export class dtoUserUnFollowManga{
+    @ApiProperty({description:"Manga Id"})
+    @IsMongoId()
+    manga_id:string
+}

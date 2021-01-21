@@ -29,6 +29,9 @@ export class UserService {
     async addDevicesUser(user_id:string,devices:string):Promise<User>{
         return this.userModel.findByIdAndUpdate(user_id,{$addToSet:{devices:devices}})
     }
+    async removeDeviceUser(user_id:string,devices:string):Promise<User>{
+        return this.userModel.findByIdAndUpdate(user_id,{$pull:{devices:devices}})
+    }
     async updateUserInfo(user_id:string,infoUser:dtoUpdateUserInfo):Promise<User>{
         return this.userModel.findByIdAndUpdate(user_id,{...infoUser},{new:true});
     }
