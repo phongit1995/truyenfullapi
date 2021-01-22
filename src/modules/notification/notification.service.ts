@@ -35,5 +35,18 @@ export class NotificationService {
         if(mangaData.devices.length==0){
             return ;
         }
+        this.fcmPushService.sendMessage({
+            registration_ids:mangaData.devices,
+            notification:{
+                title:"Cập Nhật",
+                body:` ${mangaData.name} đã có chapter mới kìa !!!`,
+                image:mangaData.image
+            },
+            apns:{
+                fcm_options:{
+                    image:mangaData.image
+                }
+            }
+        })
     }
 }
