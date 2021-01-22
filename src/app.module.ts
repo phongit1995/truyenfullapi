@@ -11,9 +11,10 @@ import { VersionModule } from './modules/version/version.module';
 import { CronjobModule } from './modules/cronjob/cronjob.module';
 import { NotificationModule } from './modules/notification/notification.module';
 import { ValidationRequestServer } from './common/check.middlware';
+import { ReportModule } from './modules/report/report.module';
 
 @Module({
-  imports: [ShareModule, MangaModule, ChapterModule,CategoryModule,UserModule, CommentModule, UploadModule, VersionModule, CronjobModule, NotificationModule],
+  imports: [ShareModule, MangaModule, ChapterModule,CategoryModule,UserModule, CommentModule, UploadModule, VersionModule, CronjobModule, NotificationModule, ReportModule],
   controllers: [],
   providers: [],
 })

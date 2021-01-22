@@ -24,9 +24,9 @@ import { CommentService } from './comment.service';
 export class CommentController {
     constructor(private commentService:CommentService){}
     @Post("comment-manga")
-    @Roles(RoleType.USER)
     @ApiOperation({summary:"Comment To Manga"})
     @ApiResponse({ status: 200, description: 'Comment Success Full.'})
+    @Roles(RoleType.USER)
     @UsePipes(new ValidationPipe())
     async commentToManga(@Body()dataComment:dtoCommentToManga,@UserInfo()user:User){
         const comment = await this.commentService.commentToManga(dataComment.manga_id,user._id,dataComment.message);

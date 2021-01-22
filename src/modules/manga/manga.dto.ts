@@ -100,3 +100,8 @@ export class dtoUserUnFollowManga{
     @IsMongoId()
     manga_id:string
 }
+export class dotReportManga{
+    @ApiProperty({description:"Manga Id"})
+    @IsMongoId()
+    manga_id:string
+}
