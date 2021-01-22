@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ScheduleModule } from '@nestjs/schedule';
 import { chapterSchema } from 'src/database/chapter.model';
 import { mangaSchema } from 'src/database/manga.model';
+import { NotificationModule } from '../notification/notification.module';
 import { CronjobService } from './cronjob.service';
 
 @Module({
@@ -11,7 +12,8 @@ import { CronjobService } from './cronjob.service';
       MongooseModule.forFeature([
           {name:"manga",schema:mangaSchema},
           {name:"chapter",schema:chapterSchema}
-      ])
+      ]),
+      NotificationModule
   ],
   providers: [CronjobService]
 })

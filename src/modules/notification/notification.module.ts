@@ -13,6 +13,7 @@ import { mangaSchema } from 'src/database/manga.model';
     ])
   ],
   providers: [NotificationService],
-  controllers: [NotificationController]
+  controllers: [NotificationController],
+  exports:[NotificationService]
 })
 export class NotificationModule {}

@@ -14,7 +14,16 @@ import { ValidationRequestServer } from './common/check.middlware';
 import { ReportModule } from './modules/report/report.module';
 
 @Module({
-  imports: [ShareModule, MangaModule, ChapterModule,CategoryModule,UserModule, CommentModule, UploadModule, VersionModule, CronjobModule, NotificationModule, ReportModule],
+  imports: [ShareModule, 
+    MangaModule, 
+    ChapterModule,
+    CategoryModule,UserModule, 
+    CommentModule, 
+    UploadModule, 
+    VersionModule, 
+    CronjobModule, 
+    NotificationModule, 
+    ReportModule],
   controllers: [],
   providers: [],
 })

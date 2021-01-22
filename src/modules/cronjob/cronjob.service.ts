@@ -7,12 +7,14 @@ import { Manga } from 'src/database/manga.model';
 import { RequestService } from 'src/shared/services/request.service';
 import * as cheerio from 'cheerio';
 import {xorBy} from 'lodash';
+import { NotificationService } from '../notification/notification.service';
 @Injectable()
 export class CronjobService {
     constructor(
         @InjectModel("manga") private readonly mangaModel:Model<Manga>,
         @InjectModel("chapter") private readonly chapterModel:Model<Chapter>,
-        private requestService:RequestService
+        private requestService:RequestService,
+        private readonly notificationService:NotificationService
     ){}
     private readonly URL_WEBSITE="https://truyenfull.vn/"
     @Cron(CronExpression.EVERY_2_HOURS)
@@ -59,6 +61,7 @@ export class CronjobService {
         const resultInsertChapter =await Promise.all(ArrayPromiseInsertChapter);
         const listIdChapterInsert:string[] = resultInsertChapter.map(item=>item._id);
         await this.updateChapterOfManga(manga._id,listIdChapterInsert);
+        this.notificationService.sendNotificationUpdateChapterManga(manga._id);
         console.log("Update Success : " + listIdChapterInsert.length + "  Url : "+manga.url);
     }
     async getListNewChapterByUrl(url):Promise<Array<{name?:string,url?:string,index?:number}>>{
