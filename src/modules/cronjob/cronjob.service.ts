@@ -118,6 +118,7 @@ export class CronjobService {
             $push:{
                 chapters:{$each:listChapter}
             },
+            chapter_update_count:listChapter.length,
             chapter_update: new Date()
         })
     }
