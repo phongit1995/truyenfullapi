@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { NOTIFiCATION_TYPE } from 'src/common/constants/notification.type';
 import { Chapter } from 'src/database/chapter.model';
 import { Manga } from 'src/database/manga.model';
 import { FcmPushService } from 'src/shared/services/push.service';
@@ -41,6 +42,10 @@ export class NotificationService {
                 title:"Cập Nhật",
                 body:` ${mangaData.name} đã có chapter mới kìa !!!`,
                 image:mangaData.image
+            },
+            data:{
+                type:NOTIFiCATION_TYPE.MANGA_NEW_CHAPTER,
+                id:manga_id
             },
             apns:{
                 fcm_options:{

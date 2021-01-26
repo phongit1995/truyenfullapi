@@ -2,7 +2,7 @@ import { Body, Controller, Post, UseGuards, UsePipes, ValidationPipe } from '@ne
 import { ApiConsumes, ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResult } from 'src/common/api-result';
 import { RolesGuard } from 'src/common/guards/roles.guard';
-import { dtoTestNotification } from './notification.dto';
+import { dtoTestNotification, dtoTestNotificationUpdateManga } from './notification.dto';
 import { NotificationService } from './notification.service';
 @ApiHeader({
     name: 'token',
@@ -25,6 +25,14 @@ export class NotificationController {
     @UsePipes(new ValidationPipe({transform:true}))
     async testNotification(@Body()data:dtoTestNotification){
         const result = await this.notificationService.testPushNotification([data.devices]);
+        return (new ApiResult().success(result))
+    }
+    @Post("test-notification-manga")
+    @ApiOperation({summary:"Test Notification To update Manga"})
+    @ApiResponse({ status: 200, description: 'Test Notification To update Manga Success Fully.'})
+    @UsePipes(new ValidationPipe({transform:true}))
+    async testNotificationUpdateChapterManga(@Body()data:dtoTestNotificationUpdateManga){
+        const result = await this.notificationService.sendNotificationUpdateChapterManga(data.manga_id);
         return (new ApiResult().success(result))
     }
 }
