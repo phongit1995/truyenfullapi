@@ -22,3 +22,12 @@ export class dtoGetListVersion{
     @IsEnum(VERSION_TYPE)
     version_type:string=VERSION_TYPE.ANDROID;
 }
+export class dtoCheckUpdateVersion{
+    @ApiProperty({description:"Version Type",default:VERSION_TYPE.ANDROID})
+    @IsString()
+    @IsEnum(VERSION_TYPE)
+    version_type:string=VERSION_TYPE.ANDROID;
+    @ApiProperty({description:"Name Version",default:"1.1"})
+    @IsString()
+    name:string ;
+}

@@ -1,10 +1,10 @@
 import { Body, Controller, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ApiConsumes, ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiHeader, ApiOperation, ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResult } from 'src/common/api-result';
 import { RoleType } from 'src/common/constants/role-type';
 import { Roles } from 'src/common/decorators/role.decorators';
 import { RolesGuard } from 'src/common/guards/roles.guard';
-import { dtoCreateNewVersion, dtoGetListVersion } from './version.dto';
+import { dtoCheckUpdateVersion, dtoCreateNewVersion, dtoGetListVersion } from './version.dto';
 import { VersionService } from './version.service';
 @ApiHeader({
     name: 'token',
@@ -38,5 +38,14 @@ export class VersionController {
     async getListVersion(@Body()dataGetList:dtoGetListVersion){
         const listVersion  = await this.versionService.getListVersion(dataGetList.version_type);
         return (new ApiResult().success(listVersion))
+    }
+    @Post("check-update")
+    @Roles(RoleType.MEMBER)
+    @ApiOperation({summary:"Check Update Version"})
+    @ApiResponse({ status: 200, description: 'Check Update Version Success Full.'})
+    @UsePipes(new ValidationPipe())
+    async checkUpdateVersion(@Body()data:dtoCheckUpdateVersion){
+        const statusUpdate = await this.versionService.checkUpdateVersion(data.name,data.version_type);
+        return (new ApiResult().success(statusUpdate))
     }
 }

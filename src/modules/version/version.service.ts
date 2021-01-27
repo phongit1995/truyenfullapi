@@ -20,4 +20,14 @@ export class VersionService {
             version_type:version_type
         }).sort({createdAt:-1})
     }
+    async checkUpdateVersion(name:string,version_type:string):Promise<boolean>{
+        let updateStatus = true ;
+        let listVersion = await this.versionModel.find({version_type:version_type});
+        listVersion.forEach((version)=>{
+            if(version.name==name){
+                updateStatus=version.support;
+            }
+        })
+        return updateStatus ;
+    }
 }
