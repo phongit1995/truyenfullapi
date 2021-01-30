@@ -107,12 +107,4 @@ export class MangaController {
         const listSuggest= await this.mangaService.listSuggestManga(dataSuggest.category,dataSuggest.page,dataSuggest.numberItem);
         return (new ApiResult().success(listSuggest))
     }
-    @Get("radom-view-manga")
-    @ApiOperation({summary:"Radom Views Manga"})
-    @ApiResponse({ status: 200, description: 'Radom Views Manga Success Fully.'})
-    @UsePipes(new ValidationPipe({transform:true}))
-    async radomViewsManga(){
-        await this.mangaService.radomViewsManga();
-        return (new ApiResult().success())
-    }
 }
