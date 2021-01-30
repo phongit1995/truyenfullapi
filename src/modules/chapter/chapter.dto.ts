@@ -14,11 +14,11 @@ export class dtoGetListChapter {
     @IsOptional()
     @Min(1)
     numberItem:number=100;
-    @ApiProperty({title:"Sort Type" ,description:"1 la chapter tang dan. -1 la chapter giam dan"})
+    @ApiProperty({title:"Sort Type" ,description:"1 la chapter tang dan. -1 la chapter giam dan",default:1})
     @IsEnum([1,-1])
     @IsNumber()
     @IsOptional()
-    sort:1;
+    sort:number=1;
 }
 export class dtoGetDetialChapter {
     @ApiProperty({title:"id of chapter"})

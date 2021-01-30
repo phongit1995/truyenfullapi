@@ -120,4 +120,15 @@ export class MangaService {
             }
         })
     }
+    async radomViewsManga(){
+        let listManga = await this.mangaModel.find();
+        let radom = Math.floor(Math.random()*(50000-1000+1))+1000;
+        let resultMangaPromise = listManga.map((item)=>{
+            return this.mangaModel.findByIdAndUpdate(item._id,{
+                views:Math.floor(Math.random()*(50000-1000+1))+1000
+            })
+        })
+        await Promise.all(resultMangaPromise);
+        console.log(listManga.length);
+    }
 }

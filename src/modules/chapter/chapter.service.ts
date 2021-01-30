@@ -15,7 +15,7 @@ export class ChapterService {
     private requestService:RequestService,
     private mangaService:MangaService){}
     async getListChapterManga(manga_id:string,page:number,numberItem:number,sort:number):Promise<Array<Chapter>>{
-        const KEY_CACHE= "CACHE_LIST_CHAPTER_"+manga_id+"_"+page+"_"+numberItem;
+        const KEY_CACHE= "CACHE_LIST_CHAPTER_"+manga_id+"_"+page+"_"+numberItem+"_"+sort;
         let dataCache= await this.cacheService.get<Chapter[]>(KEY_CACHE);
         if(dataCache){
             return dataCache;
@@ -26,7 +26,7 @@ export class ChapterService {
         .skip((page-1)*numberItem)
         .limit(numberItem)
         .sort({index:sort})
-        .select("-images -url -updatedAt -source -manga -content");
+        .select("-images -url -updatedAt -source -content");
         await this.cacheService.set(KEY_CACHE,dataCache,1000*60*30);
         return dataCache;
     }

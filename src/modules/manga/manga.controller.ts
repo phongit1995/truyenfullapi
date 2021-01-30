@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiConsumes, ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResult } from 'src/common/api-result';
 import { RoleType } from 'src/common/constants/role-type';
@@ -106,5 +106,13 @@ export class MangaController {
     async suggestToManga(@Body()dataSuggest:dtoSuggestManga){
         const listSuggest= await this.mangaService.listSuggestManga(dataSuggest.category,dataSuggest.page,dataSuggest.numberItem);
         return (new ApiResult().success(listSuggest))
+    }
+    @Get("radom-view-manga")
+    @ApiOperation({summary:"Radom Views Manga"})
+    @ApiResponse({ status: 200, description: 'Radom Views Manga Success Fully.'})
+    @UsePipes(new ValidationPipe({transform:true}))
+    async radomViewsManga(){
+        await this.mangaService.radomViewsManga();
+        return (new ApiResult().success())
     }
 }
