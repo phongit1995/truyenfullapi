@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsMongoId, IsNumber, IsOptional, Min } from "class-validator";
+import { IsEnum, isEnum, IsMongoId, IsNumber, IsOptional, Min } from "class-validator";
 
 export class dtoGetListChapter {
     @ApiProperty({title:"id of manga"})
@@ -13,7 +13,12 @@ export class dtoGetListChapter {
     @IsNumber()
     @IsOptional()
     @Min(1)
-    numberItem:number=100
+    numberItem:number=100;
+    @ApiProperty({title:"Sort Type" ,description:"1 la chapter tang dan. -1 la chapter giam dan"})
+    @IsEnum([1,-1])
+    @IsNumber()
+    @IsOptional()
+    sort:1;
 }
 export class dtoGetDetialChapter {
     @ApiProperty({title:"id of chapter"})
