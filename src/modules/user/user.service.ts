@@ -33,6 +33,6 @@ export class UserService {
         return this.userModel.findByIdAndUpdate(user_id,{$pull:{devices:devices}})
     }
     async updateUserInfo(user_id:string,infoUser:dtoUpdateUserInfo):Promise<User>{
-        return this.userModel.findByIdAndUpdate(user_id,{...infoUser},{new:true});
+        return this.userModel.findByIdAndUpdate(user_id,{...infoUser,status_update_info:true},{new:true});
     }
 }

@@ -26,6 +26,10 @@ export const userSchema:mongoose.Schema = new mongoose.Schema({
         type:String,
         default:ROLE_USER.MEMBER
     },
+    status_update_info:{
+        type:Boolean,
+        default:false
+    },
     vip:{
         type:Boolean,
         default:false
@@ -43,6 +47,7 @@ export interface User extends mongoose.Document {
    email?:string,
    password?:string,
    avatar?:string,
+   status_update_info?:boolean,
    phone?:string,
    role?:string,
    gender?:number,
