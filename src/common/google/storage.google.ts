@@ -6,7 +6,7 @@ oAuth2Client.setCredentials(token);
 const drive = google.drive({version:"v3",auth:oAuth2Client});
 export const storageDrive = GoogleDriveStorage({
     drive:drive,
-    parents:'1IXYOLEDTE6w0N3MjiSceNinZ2JrG2Yo4',
+    parents:'1oFeKdmtJIgGyLc5pYRpniRNOvvmgFOD_',
     fileName: function (req, file, cb) {
         if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
             req.fileValidationError = 'Only image files are allowed!';
