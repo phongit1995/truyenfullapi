@@ -4,5 +4,14 @@ export interface fileUpload{
     encoding:string,
     mimetype:string,
     fileName:string,
-    fileId:string
+    fileId:string,
+    
+}
+export interface fileUploadCloudinary {
+    fieldname:string,
+    originalname:string,
+    encoding:string,
+    mimetype:string,
+    path:string,
+    size:number
 }
