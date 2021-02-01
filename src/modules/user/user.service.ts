@@ -23,8 +23,12 @@ export class UserService {
             throw new HttpException(ERROR_TYPE.EMAIL_OR_PASSWORD_IS_CORRECT,HttpStatus.BAD_REQUEST);
         }
         const userObject = user.toObject();
-        userObject.token = this.jwtService.sign(userObject);
+        userObject.token = this.jwtService.sign({_id:userObject._id});
         return userObject;
+    }
+    async getMeInfoData(user_id:string){
+        return this.userModel.findById(user_id)
+        .select("-password -devices")
     }
     async addDevicesUser(user_id:string,devices:string):Promise<User>{
         return this.userModel.findByIdAndUpdate(user_id,{$addToSet:{devices:devices}})

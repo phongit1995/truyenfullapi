@@ -17,6 +17,17 @@ export class dtoCommentToChapter {
     @IsString()
     message:string
 }
+export class dtoListCommentPublic{
+    @ApiProperty({minimum:1,example:1})
+    @IsNumber()
+    @Min(1)
+    page:number=1;
+    @ApiProperty({minimum:1,example:10})
+    @IsNumber()
+    @IsOptional()
+    @Min(1)
+    numberItem:number=10
+}
 export class dtoListCommentManga{
     @ApiProperty({minimum:1,example:1})
     @IsNumber()

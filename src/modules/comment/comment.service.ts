@@ -32,6 +32,9 @@ export class CommentService {
         ])
         return this.commentModel.create({user:user_id,message:message,manga:Chapter.manga as string,chapter:chapter_id});
     }
+    async getListTopComment(page:number,numberItem:number){
+        
+    }
     async getListCommentInManga(manga_id:string,page:number,numberItem:number):Promise<Array<Comment>>{
         return this.commentModel.find({
             manga:manga_id

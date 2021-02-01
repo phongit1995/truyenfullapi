@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiConsumes, ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResult } from 'src/common/api-result';
 import { RoleType } from 'src/common/constants/role-type';
@@ -37,6 +37,15 @@ export class UserController {
     async LoginUser(@Body()dataLogin:dtoLoginUser){
         const user = await this.userService.LoginUser(dataLogin);
         return (new ApiResult().success(user))
+    }
+    @Get("me-info")
+    @ApiOperation({summary:"Get Me Info Success"})
+    @ApiResponse({ status: 200, description: 'Get Me Info Success Fully.'})
+    @UsePipes(new ValidationPipe({transform:true}))
+    @Roles(RoleType.USER)
+    async getMeInfo(@UserInfo()user:User){
+        const userData = await this.userService.getMeInfoData(user._id);
+        return (new ApiResult().success(userData))
     }
     @Post("add-devices-user")
     @ApiOperation({summary:"Login User Success"})
