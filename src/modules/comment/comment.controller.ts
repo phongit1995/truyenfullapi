@@ -47,7 +47,8 @@ export class CommentController {
     @Roles(RoleType.MEMBER)
     @UsePipes(new ValidationPipe())
     async getListPublicComment(@Body()dataComment:dtoListCommentPublic){
-        
+        const listComment = await this.commentService.getListTopComment(dataComment.page,dataComment.numberItem);
+        return (new ApiResult().success(listComment))
     }
     @Post("list-comment-manga")
     @ApiOperation({summary:"Get List Comment Manga"})

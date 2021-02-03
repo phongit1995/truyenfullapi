@@ -50,7 +50,7 @@ export class MangaService {
         .skip((dataGet.page-1)*dataGet.numberItem)
         .limit(dataGet.numberItem).sort(sortOptions)
         .select("-chapters -user_follow");
-        await this.cacheService.set(KEY_CACHE,listManga);
+        await this.cacheService.set(KEY_CACHE,listManga,1000*60*3);
         return listManga;
     }
     async SearchMangaByName(dataSearch:dtoSearchManga):Promise<Manga[]>{

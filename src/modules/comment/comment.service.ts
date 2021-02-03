@@ -33,7 +33,21 @@ export class CommentService {
         return this.commentModel.create({user:user_id,message:message,manga:Chapter.manga as string,chapter:chapter_id});
     }
     async getListTopComment(page:number,numberItem:number){
-        
+        return this.commentModel.find()
+        .populate({
+            path:"manga",
+            select:"name image _id"
+        })
+        .populate({
+            path:"chapter",
+            select:"title index _id"
+        })
+        .populate({
+            path:'user',
+            select:"name avatar _id"
+        })
+        .sort({createdAt:-1})
+        .skip((page-1)*numberItem).limit(numberItem).select("-reply");
     }
     async getListCommentInManga(manga_id:string,page:number,numberItem:number):Promise<Array<Comment>>{
         return this.commentModel.find({
