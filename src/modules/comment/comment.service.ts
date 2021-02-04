@@ -5,13 +5,15 @@ import { ERROR_TYPE } from 'src/common/constants/error';
 import { Comment } from 'src/database/comment.model';
 import { ChapterService } from '../chapter/chapter.service';
 import { MangaService } from '../manga/manga.service';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable()
 export class CommentService {
     constructor(
         @InjectModel('comment') private commentModel:Model<Comment>,
         private mangaService:MangaService,
-        private chapterService:ChapterService
+        private chapterService:ChapterService,
+        private notificationService:NotificationService
     ){}
     async commentToManga(manga_id:string,user_id:string,message:string){
         const Manga = await this.mangaService.getDetialMangaById(manga_id);
@@ -19,7 +21,9 @@ export class CommentService {
             throw new HttpException(ERROR_TYPE.MANGA_NOT_FOUND,HttpStatus.BAD_REQUEST)
         }
         await this.mangaService.addCountComment(manga_id,1);
-        return this.commentModel.create({user:user_id,message:message,manga:manga_id});
+        let comment =await this.commentModel.create({user:user_id,message:message,manga:manga_id});
+        this.notificationService.sendNotificationWhenCommentManga(user_id,Manga._id,Manga.name,comment.createdAt);
+        return comment ;
     }
     async commentToChapter(chapter_id:string,user_id:string,message:string){
         const Chapter = await this.chapterService.getDetialChapter(chapter_id);
@@ -30,13 +34,14 @@ export class CommentService {
             this.mangaService.addCountComment(Chapter.manga as string,1),
             this.chapterService.addCommentCount(chapter_id,1)
         ])
-        return this.commentModel.create({user:user_id,message:message,manga:Chapter.manga as string,chapter:chapter_id});
+        let comment =await this.commentModel.create({user:user_id,message:message,manga:Chapter.manga as string,chapter:chapter_id});
+        return comment ;
     }
     async getListTopComment(page:number,numberItem:number){
         return this.commentModel.find()
         .populate({
             path:"manga",
-            select:"name image _id"
+            select:"name image _id author"
         })
         .populate({
             path:"chapter",

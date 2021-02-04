@@ -41,5 +41,7 @@ export interface Comment extends mongoose.Document {
     chapter?:string,
     manga?:string,
     replyCount?:number,
-    reply?:Array<ReplyComment>
+    reply?:Array<ReplyComment>,
+    createdAt?:Date,
+    updatedAt?:Date
 }

@@ -3,7 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { NOTIFiCATION_TYPE } from 'src/common/constants/notification.type';
 import { Chapter } from 'src/database/chapter.model';
+import { Comment } from 'src/database/comment.model';
 import { Manga } from 'src/database/manga.model';
+import { User } from 'src/database/user.model';
 import { FcmPushService } from 'src/shared/services/push.service';
 
 @Injectable()
@@ -11,7 +13,9 @@ export class NotificationService {
     constructor(
         private readonly fcmPushService:FcmPushService,
         @InjectModel("manga") private readonly mangaModel:Model<Manga>,
-        @InjectModel("chapter") private readonly chapterModel:Model<Chapter>
+        @InjectModel("chapter") private readonly chapterModel:Model<Chapter>,
+        @InjectModel("comment") private readonly commentModel:Model<Comment>,
+        @InjectModel("user") private readonly userModel:Model<User>,
     ){}
     async testPushNotification(devices:string[]){
         return this.fcmPushService.sendMessage({
@@ -53,5 +57,42 @@ export class NotificationService {
                 }
             }
         })
+    }
+    // Notification user When Comment To Manga
+    async sendNotificationWhenCommentManga(user_id:string,manga_id:string,manga_name:string,date_comment:Date){
+        const dateFetch:Date = new Date(date_comment.getTime()-1000*60*60*12);
+        const listCommentLate = await this.commentModel.find({
+            manga:manga_id,
+            user:{$ne:user_id},
+            createdAt:{$gt:dateFetch}
+        })
+        const listUser = listCommentLate.map((comment)=>comment.user);
+        let listDevices=await this.getListDevicesOfUser(listUser);
+         if(listDevices.length==0){
+             return ;
+         }
+         const user = await this.userModel.findById(user_id);
+         this.fcmPushService.sendMessage({
+             registration_ids:listDevices,
+             notification:{
+                 title:"👉 👉 Bình Luận 👈👈",
+                 body:` ❤️💖 ${user.name} cũng đã bình luận vào truyện ${manga_name}`
+             },
+             data:{
+                type:NOTIFiCATION_TYPE.COMMENT_TO_MANGA,
+                id:manga_id
+            },
+         })
+    }
+    // get List Devices Of List User
+    private async getListDevicesOfUser(listUser:string[]):Promise<string[]>{
+        const listUserData = await this.userModel.find({
+            _id:{
+                $in:listUser
+            }
+        })
+        let listDevices:string[]=[];
+        listUserData.forEach((user)=>listDevices=listDevices.concat(user.devices));
+        return listDevices;
     }
 }

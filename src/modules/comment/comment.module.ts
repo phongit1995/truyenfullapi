@@ -5,12 +5,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CommentSchema } from 'src/database/comment.model';
 import { MangaModule } from '../manga/manga.module';
 import { ChapterModule } from '../chapter/chapter.module';
+import { NotificationModule } from '../notification/notification.module';
 
 @Module({
   imports:[
     MongooseModule.forFeature([{name:'comment',schema:CommentSchema}]),
     MangaModule,
-    ChapterModule
+    ChapterModule,
+    NotificationModule
   ],
   providers: [CommentService],
   controllers: [CommentController]
