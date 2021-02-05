@@ -21,7 +21,8 @@ export class ChapterService {
             return dataCache;
         }
         dataCache =await  this.chapterModel.find({
-            manga:manga_id
+            manga:manga_id,
+            title:{$exists: true}
         })
         .skip((page-1)*numberItem)
         .limit(numberItem)
@@ -37,7 +38,8 @@ export class ChapterService {
             return resultCacheNumberChapter;
         }
         resultCacheNumberChapter=await  this.chapterModel.countDocuments({
-            manga:manga_id
+            manga:manga_id,
+            title:{$exists: true}
         })
         await this.cacheService.set(KEY_CACHE,resultCacheNumberChapter,1000*60*5);
         return resultCacheNumberChapter;
