@@ -28,7 +28,7 @@ export class ChapterService {
         .limit(numberItem)
         .sort({index:sort})
         .select("-images -url -updatedAt -source -content");
-        await this.cacheService.set(KEY_CACHE,dataCache,1000*60*30);
+        await this.cacheService.set(KEY_CACHE,dataCache,60*30);
         return dataCache;
     }
     async totalNumberChapter(manga_id:string):Promise<number>{
@@ -69,7 +69,7 @@ export class ChapterService {
             chapter.after = afterChapter?._id ;
             await chapter.save();
         }
-        await this.cacheService.set(KEY_CACHE,chapter,1000*60*30);
+        await this.cacheService.set(KEY_CACHE,chapter,60*30);
         await this.IncrementToManga(chapter.manga as string);
         return chapter ;
     }
